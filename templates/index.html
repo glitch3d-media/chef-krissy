@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chef Krissy Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Chef Krissy Menu Studio</h1>
+            <div class="actions">
+                <a href="/api/pdf" class="btn">Download PDF</a>
+                <a href="/api/menu" class="btn">View Raw JSON</a>
+                <a href="/menu" class="btn">View Full Menu Page</a>
+            </div>
+        </header>
+
+        <main>
+            <h2>Current Menu Preview</h2>
+            <div class="menu-preview">
+                <h3>{{ data.meta.business_name or 'Your Business Name' }}</h3>
+                <p>{{ data.meta.contact_info or 'Contact Info' }}</p>
+                
+                {% for day, meals in data.schedule.items() %}
+                <div class="day-card">
+                    <h4>{{ day }}</h4>
+                    
+                    <div class="meal-section">
+                        <h5>Breakfast</h5>
+                        {% if meals.breakfast %}
+                            <ul>
+                            {% for item in meals.breakfast %}
+                                <li>{{ item.name }} <span>{{ item.price }}</span></li>
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="empty">No items yet</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="meal-section">
+                        <h5>Lunch</h5>
+                        {% if meals.lunch %}
+                            <ul>
+                            {% for item in meals.lunch %}
+                                <li>{{ item.name }} <span>{{ item.price }}</span></li>
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="empty">No items yet</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </main>
+    </div>
+</body>
+</html>

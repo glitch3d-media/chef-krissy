@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - {{ data.meta.business_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="print-view">
+    <div class="menu-container">
+        <header>
+            <h1>{{ data.meta.title or 'Menu' }}</h1>
+            <h2>{{ data.meta.business_name }}</h2>
+            <p>{{ data.meta.contact_info }}</p>
+        </header>
+
+        <div class="menu-grid">
+            {% for day, meals in data.schedule.items() %}
+            <div class="day-column">
+                <h3>{{ day }}</h3>
+                
+                <div class="meal">
+                    <h4>Breakfast</h4>
+                    <ul>
+                    {% for item in meals.breakfast %}
+                        <li>
+                            <span class="item-name">{{ item.name }}</span>
+                            <span class="item-price">{{ item.price }}</span>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="meal">
+                    <h4>Lunch</h4>
+                    <ul>
+                    {% for item in meals.lunch %}
+                        <li>
+                            <span class="item-name">{{ item.name }}</span>
+                            <span class="item-price">{{ item.price }}</span>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
